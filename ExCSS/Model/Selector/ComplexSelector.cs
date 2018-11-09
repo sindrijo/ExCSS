@@ -25,6 +25,11 @@ namespace ExCSS
         {
             return _selectors.GetEnumerator();
         }
+
+        public CombinatorSelector this[int index]
+        {
+            get { return _selectors[index]; }
+        }
        
         internal void ConcludeSelector(BaseSelector selector)
         {
