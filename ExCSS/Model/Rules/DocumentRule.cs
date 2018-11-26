@@ -9,12 +9,12 @@ namespace ExCSS
 {
     public sealed class DocumentRule : AggregateRule
     {
-        readonly List<Tuple<DocumentFunction, string>> _conditions;
+        readonly List<DocumentCondition> _conditions;
 
         internal DocumentRule()
         { 
             RuleType = RuleType.Document;
-            _conditions = new List<Tuple<DocumentFunction, string>>();
+            _conditions = new List<DocumentCondition>();
         }
 
         public string ConditionText
@@ -31,7 +31,7 @@ namespace ExCSS
                         builder.Append(',');
                     }
 
-                    switch (condition.Item1)
+                    switch (condition.Type)
                     {
                         case DocumentFunction.Url:
                             builder.Append("url");
@@ -52,7 +52,7 @@ namespace ExCSS
 
                     builder.Append(Specification.ParenOpen);
                     builder.Append(Specification.DoubleQuote);
-                    builder.Append(condition.Item2);
+                    builder.Append(condition.Value);
                     builder.Append(Specification.DoubleQuote);
                     builder.Append(Specification.ParenClose);
                     concat = true;
@@ -62,7 +62,7 @@ namespace ExCSS
             }
         }
 
-        internal List<Tuple<DocumentFunction, string>> Conditions
+        internal List<DocumentCondition> Conditions
         {
             get { return _conditions; }
         }
@@ -77,6 +77,19 @@ namespace ExCSS
             return "@document " + ConditionText + " {" + 
                 RuleSets + 
                 "}".NewLineIndent(friendlyFormat, indentation);
+        }
+    }
+
+    internal sealed class DocumentCondition
+    {
+        public readonly DocumentFunction Type;
+
+        public readonly string Value;
+
+        public DocumentCondition(DocumentFunction type, string value)
+        {
+            Type = type;
+            Value = value;
         }
     }
 }

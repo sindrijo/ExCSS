@@ -769,15 +769,15 @@ namespace ExCSS
             switch (token.GrammarSegment)
             {
                 case GrammarSegment.Url:
-                    CastRuleSet<DocumentRule>().Conditions.Add(Tuple.Create(DocumentFunction.Url, ((StringBlock)token).Value));
+                    CastRuleSet<DocumentRule>().Conditions.Add(new DocumentCondition(DocumentFunction.Url, ((StringBlock)token).Value));
                     break;
 
                 case GrammarSegment.UrlPrefix:
-                    CastRuleSet<DocumentRule>().Conditions.Add(Tuple.Create(DocumentFunction.UrlPrefix, ((StringBlock)token).Value));
+                    CastRuleSet<DocumentRule>().Conditions.Add(new DocumentCondition(DocumentFunction.UrlPrefix, ((StringBlock)token).Value));
                     break;
 
                 case GrammarSegment.Domain:
-                    CastRuleSet<DocumentRule>().Conditions.Add(Tuple.Create(DocumentFunction.Domain, ((StringBlock)token).Value));
+                    CastRuleSet<DocumentRule>().Conditions.Add(new DocumentCondition(DocumentFunction.Domain, ((StringBlock)token).Value));
                     break;
 
                 case GrammarSegment.Function:
@@ -803,7 +803,7 @@ namespace ExCSS
             SetParsingContext(ParsingContext.AfterDocumentFunction);
 
             if (token.GrammarSegment != GrammarSegment.String) return false;
-            CastRuleSet<DocumentRule>().Conditions.Add(Tuple.Create(DocumentFunction.RegExp, ((StringBlock)token).Value));
+            CastRuleSet<DocumentRule>().Conditions.Add(new DocumentCondition(DocumentFunction.RegExp, ((StringBlock)token).Value));
             return true;
         }
 
